@@ -1,0 +1,20 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: project1_development
+  username:
+  password:
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  database: project1_test
+  username:
+  password:
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: project1_production
+  username:
+  password:
