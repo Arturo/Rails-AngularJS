@@ -1,0 +1,21 @@
+Registration
+
+= form_for @registration do |f|
+  - if @registration.errors.any?
+    %ul
+      - @registration.errors.full_messages.each do |msg|
+        %li= msg
+
+  %div
+    = f.label :email
+    = f.text_field :email
+  %div
+    = f.label :password
+    = f.password_field :password
+  %div
+    = f.label :age
+  = f.text_field :age
+  %div
+    = f.label :country
+    = f.country_select :country_code
+  %div= f.submit 'Create'
