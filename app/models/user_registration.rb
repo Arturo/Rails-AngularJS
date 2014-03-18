@@ -16,7 +16,6 @@ class UserRegistration
   attribute :encrypted_password, String
   attribute :salt, String
   attribute :confirmation_token, String
-  attribute :aasm_state, String
   attribute :age, Integer
   attribute :country_code, String
 
