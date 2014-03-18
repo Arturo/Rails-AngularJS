@@ -27,6 +27,10 @@ group :development do
   gem 'pry'
   gem 'pry-debugger'
   gem 'letter_opener'
+  gem 'guard-rspec', '~> 3.0.2'
+  gem 'guard-spork', '~> 1.5.1'
+  gem 'spork-rails', github: 'sporkrb/spork-rails'
+  gem 'rb-fsevent', '~> 0.9.3'
 end
 
 group :development, :test do
