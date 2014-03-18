@@ -4,7 +4,8 @@ class UserMailer < ActionMailer::Base
 
   def send_confirmation_email(user)
     @user = user
-    mail(subject: "New User Signup: #{@user.email}")
+    @confirmation_url = confirmation_url(confirmation_token: user.confirmation_token)
+    mail to: user.email, subject: 'Instructions'
   end
 
 end

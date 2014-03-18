@@ -1,5 +1,6 @@
 class UserRegistration
-  include Virtus
+  #include Virtus
+  include Virtus.model
 
   require 'digest/sha1'
 
@@ -20,9 +21,10 @@ class UserRegistration
   attribute :country_code, String
 
   validates :email, presence: true
+  validate :uniqueness_email
   validates :password, length: {:minimum => 6}
   validates :age, :country_code, presence: true
-  validates :age, numericality: { only_integer: true }
+  validates :age, numericality: { only_integer: true }, unless: Proc.new { |a| a.age.blank? }
 
   def persisted?
     false
@@ -48,6 +50,10 @@ class UserRegistration
       @user_profile = @user.create_user_profile!(age: age, country_code: country_code)
     end
 
+    def uniqueness_email
+      errors.add(:email, 'already been taken') if User.where(email: email).any?
+    end
+
     def send_confirmation_email
       UserMailer.send_confirmation_email(self.user).deliver
     end
@@ -57,8 +63,7 @@ class UserRegistration
     end
 
     def encrypt_password
-      self.salt = Digest::SHA1.hexdigest("+--#{random_string(50) +
-                  (Time.now + rand(10000)).to_s + random_string(50)}-+")
+      self.salt = Digest::SHA1.hexdigest("+--#{random_string(50) + (Time.now + rand(10000)).to_s + random_string(50)}-+")
       self.encrypted_password = Digest::SHA1.hexdigest("--#{salt}--#{password}--")
     end
 
