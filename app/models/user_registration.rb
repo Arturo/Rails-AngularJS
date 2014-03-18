@@ -1,4 +1,4 @@
-class Registration
+class UserRegistration
   include Virtus
 
   require 'digest/sha1'

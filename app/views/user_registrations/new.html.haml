@@ -1,9 +1,9 @@
 Registration
 
-= form_for @registration do |f|
-  - if @registration.errors.any?
+= form_for resource do |f|
+  - if resource.errors.any?
     %ul
-      - @registration.errors.full_messages.each do |msg|
+      - resource.errors.full_messages.each do |msg|
         %li= msg
 
   %div
