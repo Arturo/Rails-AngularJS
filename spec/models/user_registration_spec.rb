@@ -2,37 +2,43 @@ require 'spec_helper'
 
 describe UserRegistration do
 
-  it 'is valid with a email, password, age and country' do
-    expect(build(:user_registration)).to be_valid
+  subject{ build(:user_registration) }
+  specify { should be_valid }
+
+  context 'is valid' do
+    it 'with an email, password, age and country' do
+      should be_valid
+    end
   end
 
   it { should validate_presence_of :email }
 
- # it 'is invalid without email' do
- #   expect(build(:user_registration, email: nil)).to have(1).errors_on(:email)
- # end
+  context 'is invalid' do
+    subject{ build(:user_registration) }
 
-  it 'is invalid without password' do
-    expect(build(:user_registration, password: nil)).to have(1).errors_on(:password)
-  end
+    it 'without email' do
+     # expect(build(:user_registration, email: nil)).to have(1).errors_on(:email)
+      subject.email = nil
+      should have(1).errors_on(:email)
+    end
 
-  it 'is invalid without age' do
-    expect(build(:user_registration, age: nil)).to have(1).errors_on(:age)
-  end
+    it 'without password' do
+      #expect(build(:user_registration, password: nil)).to have(1).errors_on(:password)
+      subject.password = nil
+      should have(1).errors_on(:password)
+    end
 
-  it 'is invalid without country code' do
-    expect(build(:user_registration, country_code: nil)).to have(1).errors_on(:country_code)
-  end
+    it 'without age' do
+      expect(build(:user_registration, age: nil)).to have(1).errors_on(:age)
+    end
 
-  it 'is invalid with a duplicate email address' do
-    create(:user, email: 'test@example.com')
-    expect(build(:user_registration, email: 'test@example.com')).to have(1).errors_on(:email)
-  end
+    it 'without country code' do
+      expect(build(:user_registration, country_code: nil)).to have(1).errors_on(:country_code)
+    end
 
-  describe '#send_confirmation_email' do
-    it 'send an email' do
-      build(:user_registration).send(:send_confirmation_email)
-      ActionMailer::Base.deliveries.last.to.should == [user_registration.email]
+    it 'with a duplicate email address' do
+      create(:user, email: 'test@example.com')
+      expect(build(:user_registration, email: 'test@example.com')).to have(1).errors_on(:email)
     end
   end
 
