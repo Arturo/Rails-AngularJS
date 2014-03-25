@@ -1,12 +1,9 @@
 class UserRegistration
-  #include Virtus
   include Virtus.model
 
   require 'digest/sha1'
 
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
+  include ActiveModel::Model
 
   attr_reader :user
   attr_reader :user_profile
