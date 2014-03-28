@@ -1,17 +1,14 @@
 class UserRegistration
   include Virtus.model
-
-  require 'digest/sha1'
-
   include ActiveModel::Model
 
   attr_reader :user
   attr_reader :user_profile
+  attr :password_manager
 
   attribute :email, String
   attribute :password, String
   attribute :encrypted_password, String
-  attribute :salt, String
   attribute :confirmation_token, String
   attribute :age, Integer
   attribute :country_code, String
@@ -27,50 +24,49 @@ class UserRegistration
   end
 
   def save
-    if valid?
-      persist!
-      send_confirmation_email
-      true
-    else
-      false
-    end
+    return unless valid?
+    @password_manager = PasswordManager.new
+    persist!
+    send_confirmation_email
+  end
+
+  def persist!
+    encrypt_password
+    ensure_confirmation_token
+    @user = User.create!(user_attributes)
+    @user_profile = @user.create_user_profile!(profile_attributes)
+  end
+
+  def user_attributes
+    {
+      email: email,
+      encrypted_password: encrypted_password,
+      confirmation_token: confirmation_token
+    }
+  end
+
+  def profile_attributes
+    {
+      age: age,
+      country_code: country_code
+    }
+  end
+
+  def uniqueness_email
+    errors.add(:email, 'already been taken') if User.where(email: email).any?
+  end
+
+  def send_confirmation_email
+    UserMailer.send_confirmation_email(self.user).deliver
+  end
+
+  def ensure_confirmation_token
+    @confirmation_token = @password_manager.generate_token
   end
 
   private
 
-    def persist!
-      encrypt_password
-      access_confirmation_token
-      @user = User.create!(email: email, salt: salt, encrypted_password: encrypted_password,
-                          confirmation_token: confirmation_token, aasm_state: 'pending')
-      @user_profile = @user.create_user_profile!(age: age, country_code: country_code)
-    end
-
-    def uniqueness_email
-      errors.add(:email, 'already been taken') if User.where(email: email).any?
-    end
-
-    def send_confirmation_email
-      UserMailer.send_confirmation_email(self.user).deliver
-    end
-
-    def access_confirmation_token
-      self.confirmation_token = random_string(35)
-    end
-
-    def encrypt_password
-      self.salt = Digest::SHA1.hexdigest("+--#{random_string(50) + (Time.now + rand(10000)).to_s + random_string(50)}-+")
-      self.encrypted_password = Digest::SHA1.hexdigest("--#{salt}--#{password}--")
-    end
-
-    def random_string(len)
-      rand_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" << "0123456789" << "abcdefghijklmnopqrstuvwxyz"
-
-      rand_max = rand_chars.size
-      srand
-      ''.tap do |ret|
-        len.times{ ret << rand_chars[rand(rand_max)] }
-      end
-    end
-
+  def encrypt_password
+    @encrypted_password = @password_manager.encrypt_password(password)
+  end
 end

@@ -3,13 +3,9 @@ require 'spec_helper'
 describe UserRegistrationsController do
 
   describe 'GET #new' do
-    before :each do
+    before do
       get :new
     end
-
-    #it "assigns a new UserRegistration to resource" do
-    #  expect(assigns(:resource)).to be_a_new(UserRegistration)
-    #end
 
     it "renders the :new template" do
       expect(response).to render_template :new

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310121646) do
+ActiveRecord::Schema.define(version: 20140328070025) do
 
   create_table "user_profiles", force: true do |t|
     t.integer  "user_id",                null: false
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20140310121646) do
   create_table "users", force: true do |t|
     t.string   "email",              null: false
     t.string   "encrypted_password", null: false
-    t.string   "salt",               null: false
     t.string   "aasm_state"
     t.string   "confirmation_token"
     t.datetime "created_at"

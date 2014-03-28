@@ -17,13 +17,11 @@ describe UserRegistration do
     subject{ build(:user_registration) }
 
     it 'without email' do
-     # expect(build(:user_registration, email: nil)).to have(1).errors_on(:email)
       subject.email = nil
       should have(1).errors_on(:email)
     end
 
     it 'without password' do
-      #expect(build(:user_registration, password: nil)).to have(1).errors_on(:password)
       subject.password = nil
       should have(1).errors_on(:password)
     end
