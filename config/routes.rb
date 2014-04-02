@@ -1,4 +1,8 @@
 Project1::Application.routes.draw do
+  namespace :api do
+    resources :events
+  end
+
   root :to => 'user_registrations#new'
   get '/templates/:page' => 'templates#show'
 

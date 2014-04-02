@@ -8,10 +8,10 @@
       input.form-control(ng-model='event.title' id='title' placeholder='Event Title' required)
     .form-group
       label(for='start') Event Start Date
-      input.form-control(datepicker-popup="{{format}}" datepicker-options="dateOptions" ng-model='event.start' ng-required="true" close-text="Close")
+      input.form-control(datepicker-popup="{{format}}" datepicker-options="dateOptions" ng-model='event.start_date' ng-required="true" close-text="Close")
     .form-group
       label(for='end') Event End Date
-      input.form-control(datepicker-popup="{{format}}" datepicker-options="dateOptions" ng-model='event.end' ng-required="true" close-text="Close")
+      input.form-control(datepicker-popup="{{format}}" datepicker-options="dateOptions" ng-model='event.end_date' ng-required="true" close-text="Close")
     .form-group
       button.btn.btn-primary Save
 

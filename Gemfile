@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'aasm'
+gem 'active_model_serializers'
 gem 'bcrypt', '~> 3.1.7'
 gem 'carmen-rails', '~> 1.0.0'
 gem 'coffee-rails', '~> 4.0.0'

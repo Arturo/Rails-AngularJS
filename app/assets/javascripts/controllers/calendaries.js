@@ -1,18 +1,13 @@
-app.controller('CalendariesController', ['$scope', '$modal', function($scope, $modal){
+app.controller('CalendariesController', ['$scope', '$modal', 'Event', function($scope, $modal, Event){
   $scope.events = [];
-  //var date = new Date(),
-  //    d = date.getDate(),
-  //    m = date.getMonth(),
-  //    y = date.getFullYear();
 
-  //$scope.events = [
-  //  {title: 'All Day Event',start: new Date(y, m, 1)},
-  //  {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-  //  {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-  //  {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-  //  {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-  //  {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-  //];
+  Event.query(function(response){
+    response.events.forEach(function(event){
+      event.start = new Date(event.start_date);
+      event.end = new Date(event.end_date);
+      $scope.events.push(event);
+    });
+  });
 
   $scope.uiConfig = {
     calendar:{
@@ -31,6 +26,9 @@ app.controller('CalendariesController', ['$scope', '$modal', function($scope, $m
           scope: $scope,
           controller: 'CreateEventController'
         });
+      },
+      eventClick: function(calEvent, jsEvent, view) {
+        alert('Edit Event' + calEvent.title);
       }
     }
   };
@@ -39,23 +37,3 @@ app.controller('CalendariesController', ['$scope', '$modal', function($scope, $m
 
 }])
 
-app.controller('CreateEventController', ['$scope', '$modalInstance', function($scope, $modalInstance){
-
-  $scope.create = function(event){
-    $scope.events.push(event);
-    $modalInstance.close();
-  }
-
-  $scope.dateOptions = {
-    'year-format': "'yy'",
-    'starting-day': 1
-  };
-
-  $scope.formats = ['yyyy-MM-dd', 'yyyy/MM/dd', 'shortDate'];
-  $scope.format = $scope.formats[0];
-
-  $scope.cancel = function(){
-    $modalInstance.close();
-  }
-
-}])
