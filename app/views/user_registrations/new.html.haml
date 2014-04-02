@@ -1,25 +1,27 @@
-Registration
+.container
+  Registration
 
-= form_for resource do |f|
-  - if resource.errors.any?
-    %ul
-      - resource.errors.full_messages.each do |msg|
-        %li= msg
+  = form_for resource do |f|
+    - if resource.errors.any?
+      %ul
+        - resource.errors.full_messages.each do |msg|
+          %li= msg
 
-  %div
-    = f.label :email
-    = f.text_field :email
-  %div
-    = f.label :password
-    = f.password_field :password
-  %div
-    = f.label :age
-  = f.text_field :age
-  %div
-    = f.label :country
-    = f.country_select :country_code
-  %div= f.submit 'Create'
+    %div
+      = f.label :email
+      = f.text_field :email
+    %div
+      = f.label :password
+      = f.password_field :password
+    %div
+      = f.label :age
+    = f.text_field :age
+    %div
+      = f.label :country
+      = f.country_select :country_code
+    %div= f.submit 'Create'
 
-%br
-.wrapper(ng-app='app' class='content' ng-controller='CalendariesController')
-  %section#main-content(ui-view)
+  %br
+  %br
+  .wrapper(ng-app='app' class='content' ng-controller='CalendariesController')
+    %section#main-content(ui-view)
