@@ -12,4 +12,23 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//= require jquery.ui.all
+
+//= require lib/underscore-min
+//= require lib/angular
+//= require lib/ui-bootstrap
+//= require lib/ui-bootstrap-tpls
+//= require lib/angular-sanitize
+//= require lib/angular-ui-router
+//= require lib/angular-touch
+//= require lib/angular-resource
+
+//= require lib/fullcalendar
+//= require lib/gcal
+//= require lib/calendar
+
+//= require app
+//= require routes
+//= require services
+//= require_directory ./controllers
+//= require_directory ./directives

@@ -19,3 +19,7 @@ Registration
     = f.label :country
     = f.country_select :country_code
   %div= f.submit 'Create'
+
+%br
+.wrapper(ng-app='app' class='content' ng-controller='CalendariesController')
+  %section#main-content(ui-view)
