@@ -1,6 +1,7 @@
 Project1::Application.routes.draw do
   namespace :api do
     resources :events
+    resources :user_registrations
   end
 
   root :to => 'user_registrations#new'

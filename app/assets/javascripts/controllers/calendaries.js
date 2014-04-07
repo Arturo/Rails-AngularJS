@@ -27,9 +27,11 @@ app.controller('CalendariesController', ['$scope', '$modal', 'Event', function($
           controller: 'CreateEventController'
         });
       },
-      eventClick: function(calEvent, jsEvent, view) {
-        alert('Edit Event' + calEvent.title);
+      eventRender: function(event, element) {
       }
+      //eventClick: function(calEvent, jsEvent, view) {
+      //  alert('Edit Event' + calEvent.title);
+      //}
     }
   };
 

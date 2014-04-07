@@ -1,27 +1,25 @@
 .container
-  Registration
+  %h3 Registration
 
-  = form_for resource do |f|
+  = form_for resource, html: { role: 'form', style: 'width: 300px'} do |f|
     - if resource.errors.any?
       %ul
         - resource.errors.full_messages.each do |msg|
           %li= msg
 
-    %div
+    %div.form-group
       = f.label :email
-      = f.text_field :email
-    %div
+      = f.text_field :email, class: 'form-control'
+    %div.form-group
       = f.label :password
-      = f.password_field :password
-    %div
+      = f.password_field :password, class: 'form-control'
+    %div.form-group
       = f.label :age
-    = f.text_field :age
-    %div
+      = f.text_field :age, class: 'form-control'
+    %div.form-group
       = f.label :country
-      = f.country_select :country_code
-    %div= f.submit 'Create'
+      = f.country_select :country_code, {}, { class: "form-control" }
+    = f.submit 'Create', class: 'btn btn-default'
 
-  %br
-  %br
   .wrapper(ng-app='app' class='content' ng-controller='CalendariesController')
     %section#main-content(ui-view)

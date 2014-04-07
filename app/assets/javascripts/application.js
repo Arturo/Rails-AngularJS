@@ -26,9 +26,11 @@
 //= require lib/fullcalendar
 //= require lib/gcal
 //= require lib/calendar
+//= require lib/xeditable
 
 //= require app
 //= require routes
 //= require services
+//= require_directory ./decorators
 //= require_directory ./controllers
 //= require_directory ./directives
