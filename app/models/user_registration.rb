@@ -25,7 +25,6 @@ class UserRegistration
 
   def save
     return unless valid?
-    @password_manager = PasswordManager.new
     persist!
     send_confirmation_email
   end
@@ -61,12 +60,16 @@ class UserRegistration
   end
 
   def ensure_confirmation_token
-    @confirmation_token = @password_manager.generate_token
+    @confirmation_token = password_manager.generate_token
   end
 
   private
 
+  def password_manager
+    @password_manager ||= PasswordManager.new
+  end
+
   def encrypt_password
-    @encrypted_password = @password_manager.encrypt_password(password)
+    @encrypted_password = password_manager.encrypt_password(password)
   end
 end
